@@ -14,13 +14,13 @@ public class ValidadorEntrada {
         while (true) {
             try {
                 num = scanner.nextInt();
-                scanner.nextLine(); // limpiar buffer
                 if (num <= 0 ) {
                     System.out.print("❌ Entrada inválida | Ingrese un número mayor a 0 → ");
                     continue;
                 } else return num;
             } catch (InputMismatchException e) {
                 System.out.print("❌ Entrada inválida | Ingrese un número entero → ");
+                scanner.nextLine(); // limpiar buffer
             }
         }
     }

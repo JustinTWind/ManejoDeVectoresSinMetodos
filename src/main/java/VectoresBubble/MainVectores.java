@@ -2,8 +2,8 @@ package VectoresBubble;
 
 import  VectoresBubble.*;
 import  misUtilidades.*;
-
 import java.util.Arrays;
+import java.util.Scanner;
 
 import static VectoresBubble.manejoDeVectores.*;
 
@@ -21,6 +21,8 @@ public class MainVectores {
      */
 
      static void main(String[] args){
+
+         /* Rojo
          System.out.printf(STR."""
 
            ▀██    ██▀           ▄               ▀██                        ▀██                                 ▀██                                       ██                     ▄             \s
@@ -71,22 +73,26 @@ public class MainVectores {
                                                                         ⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠒⠦⣄⣸⡟⠒⠒⠒⠒⠒⠚⠛⠀⠀⠀⠀
            \s""" + ColoresConsola.COLOR_RESET);
 
+          */ // Rojo
          Menu menu = new Menu();
          boolean salir=false;
          while (!salir){
              int opcion = menu.mostrarMenuPrincipal();
 
              switch (opcion){
-                 case 1 -> salir=true;
+                 case 1 -> menu.mostrarMenuSecundario(1);
                  case 9 -> salir=true;
              }
          }
 
 
 
-        int [] vector = new int []{1,2,3,4,5,6,7,8,9,10,10,10,10,10,10,10};
+         // Pruebas de métodos
+
+
+         int [] vector = new int []{1,1,1,2,3,4,5,6,7,8,9,10};
         try{
-            int [] posicion = binarySearch(vector,10);
+            int [] posicion = binarySearch(vector,1);
             System.out.println("Posiciones: " + Arrays.toString(posicion));
         } catch (ElementNotFoundException e){
             System.out.println("Error: " + e.getMessage());
