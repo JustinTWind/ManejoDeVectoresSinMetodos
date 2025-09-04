@@ -5,23 +5,44 @@ import java.util.*;
 
 public class manejoDeVectores {
 
-    public int [] crearVector() {
-        System.out.print("Ingrese el tamaño del vector → ");
-
-        int [] vector = new int []{1};
-
+    public static int[] crearVectorManualmente(int size, Scanner sc) {
+        int[] vector = new int[size];
+        for (int i = 0; i < vector.length; i++) {
+            System.out.print("Ingrese el dígito "
+                    + ColoresConsola.TEXTO_CIAN + ("#") + (i + 1)
+                    + ColoresConsola.TEXTO_AMARILLO + " → ");
+            vector[i] = ValidadorEntrada.leerEntero(sc);
+        }
+        sc.nextLine();
         return vector;
     }
 
-    public static int [] llenarVector(){
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
-        System.out.print("Ingrese el tamaño del vector → ");
-        int n = ValidadorEntrada.leerEntero(scanner);
-        int[] vector = new int[n];
-        for (int i = 0; i < n; i++) {
-            vector[i] = random.nextInt(100,200);
-            System.out.println(vector[i]);
+    public static int[] añadirElementoArray(int[] array, Scanner sc) {
+        System.out.print(" Ingrese la cantidad de dígitos que desea agregar: ");
+        int digitos = ValidadorEntrada.leerEntero(sc);
+        sc.nextLine();
+
+        int[] nuevoArray = new int[array.length + digitos];
+
+        // Se puede usar un copy of, pero la idea es no usar muchos métodos en esta clase
+        for (int i = 0; i < array.length; i++) {
+            nuevoArray[i] = array[i];
+        }
+
+        for (int i = array.length; i < nuevoArray.length; i++) {
+            System.out.print(" Ingrese el dígito #" + (i - array.length + 1) + " que desea agregar al array → ");
+            nuevoArray[i] = ValidadorEntrada.leerEntero(sc);
+        }
+
+        return nuevoArray;
+    }
+
+
+
+    public static int[] crearVectorAleatoriamente(int size, Random rand) {
+        int[] vector = new int[size];
+        for (int i = 0; i < vector.length; i++) {
+            vector[i] = rand.nextInt(1, 50);
         }
         return vector;
     }

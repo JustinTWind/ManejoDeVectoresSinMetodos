@@ -3,9 +3,12 @@ package VectoresBubble;
 import misUtilidades.ColoresConsola;
 import misUtilidades.ValidadorEntrada;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Vector;
+
+import static VectoresBubble.manejoDeVectores.bubbleSorting;
 
 public class Menu {
 
@@ -20,7 +23,6 @@ public class Menu {
     public int mostrarMenuPrincipal() {
         System.out.println(ColoresConsola.TEXTO_AMARILLO);
         System.out.print(STR."""
-
 ⠀=======================================================================================================================================================================
 ⠀           \{ColoresConsola.TEXTO_ROJO}MENÚ PRINCIPAL\{ColoresConsola.TEXTO_AMARILLO}
 ⠀=======================================================================================================================================================================
@@ -43,65 +45,147 @@ public class Menu {
         return Integer.parseInt(entrada);
     }
 
-    public void mostrarMenuSecundario(int opcion) {
+    public int[] mostrarMenuAñadirVector() {
         System.out.println(ColoresConsola.TEXTO_AMARILLO);
-        switch (opcion){
-            case 1:
+
                 System.out.print(STR."""
 
 ⠀=======================================================================================================================================================================
-⠀           \{ColoresConsola.TEXTO_ROJO}1.1 CREAR VECTOR\{ColoresConsola.TEXTO_AMARILLO}
+⠀           \{ColoresConsola.TEXTO_ROJO}1.1 CREAR TAMAÑO VECTOR\{ColoresConsola.TEXTO_AMARILLO}
 ⠀=======================================================================================================================================================================
 ⠀        1. Ingresar tamaño del vector
 ⠀        2. Generar tamaño del vector aleatoriamente
 
 ⠀        Seleccione una opción →\t""");
 
-            String entrada = sc.nextLine().trim();
-            while (!entrada.matches("[1-2]")) {
-                System.out.print(ColoresConsola.TEXTO_ROJO + " ✖ Entrada inválida. Ingrese un dígito del 1 al 2: " + ColoresConsola.TEXTO_AMARILLO);
-                entrada = sc.nextLine().trim();
-            }
+        String entrada = sc.nextLine().trim();
+        while (!entrada.matches("[1-2]")) {
+            System.out.print(ColoresConsola.TEXTO_ROJO + " ✖ Entrada inválida. Ingrese un dígito del 1 al 2: " + ColoresConsola.TEXTO_AMARILLO);
+            entrada = sc.nextLine().trim();
+        }
 
-            int size;
-            if (Integer.parseInt(entrada) == 1) {
-                System.out.print(ColoresConsola.TEXTO_CIAN + " ◊ Ingresa el tamaño del vector → " );
-                size = ValidadorEntrada.leerEntero(sc);
-                sc.nextLine();
-            } else {
-                size = rand.nextInt(1,50);
-            }
-                System.out.println(ColoresConsola.TEXTO_AMARILLO);
-                System.out.print(STR."""
+        int size;
+        if (Integer.parseInt(entrada) == 1) {
+            System.out.print(ColoresConsola.TEXTO_CIAN + " ◊ Ingresa el tamaño del vector →\t" );
+            size = ValidadorEntrada.leerEntero(sc);
+            sc.nextLine();
+        } else {
+            size = rand.nextInt(1,50);
+        }
+            System.out.println(ColoresConsola.TEXTO_AMARILLO);
+            System.out.print(STR."""
 
 ⠀=======================================================================================================================================================================
-⠀           \{ColoresConsola.TEXTO_ROJO}1.2 CREAR VECTOR\{ColoresConsola.TEXTO_AMARILLO}
+⠀           \{ColoresConsola.TEXTO_ROJO}1.2 RELLENAR VECTOR\{ColoresConsola.TEXTO_AMARILLO}
 ⠀=======================================================================================================================================================================
 ⠀        1. Llenar vector Manualmente
 ⠀        2. Llenar vector aleatoriamente
 
 ⠀        Seleccione una opción →\t""");
 
-                entrada = sc.nextLine().trim();
-                while (!entrada.matches("[1-2]")) {
-                    System.out.print(ColoresConsola.TEXTO_ROJO + " ✖ Entrada inválida. Ingrese un dígito del 1 al 2: " + ColoresConsola.TEXTO_AMARILLO);
-                    entrada = sc.nextLine().trim();
-                }
+        entrada = sc.nextLine().trim();
+        while (!entrada.matches("[1-2]")) {
+            System.out.print(ColoresConsola.TEXTO_ROJO + " ✖ Entrada inválida. Ingrese un dígito del 1 al 2: " + ColoresConsola.TEXTO_AMARILLO);
+            entrada = sc.nextLine().trim();
+        }
 
-                if (Integer.parseInt(entrada) == 1) {
-                    int [] vector = new int[size];
-                    for (int index : vector) {
-                        System.out.print("Ingrese el dígito #" + ColoresConsola.TEXTO_CIAN + index + ColoresConsola.TEXTO_AMARILLO +  " → " );
-                        vector[index] = ValidadorEntrada.leerEntero(sc);
-                    }
-                }else  {
-                    int [] vector = new int[size];
-                    for (int index : vector) {
-                        vector[index] = rand.nextInt(1,50);
-                    }
-                }
+        if (Integer.parseInt(entrada) == 1) {
+            return manejoDeVectores.crearVectorManualmente(size,sc);
+        }else  {
+            return manejoDeVectores.crearVectorAleatoriamente(size,rand);
         }
     }
+
+    public ArrayList<int []> organizarVectoresBubble (ArrayList<int []> arrays) {
+        try {
+            if (arrays.isEmpty()) {
+                throw new ListaVaciaException("La lista de arrays está vacía, no se puede ordenar.");
+            }
+
+            arrays.replaceAll(manejoDeVectores::bubbleSorting);
+
+            // Se puede hacer también de la siguiente manera:
+
+            /*
+             for (int i = 0; i < arrays.size(); i++) {
+                int[] ordenado = bubbleSorting(arrays.get(i));
+                arrays.set(i,ordenado);
+            }
+             */
+
+            System.out.println(ColoresConsola.TEXTO_VERDE + "\n SE HAN ORGANIZADO TODOS LOS VECTORES CON ÉXITO! ✅ " + ColoresConsola.TEXTO_AMARILLO);
+
+        } catch (ListaVaciaException e) {
+                System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
+        }
+
+        return arrays;
+    };
+
+    public void mostrarArrays(ArrayList<int []> arrays) {
+
+        try {
+            if (arrays.isEmpty()) {
+                throw new ListaVaciaException("La lista de arrays está vacía, no se puede imprimir.");
+            }
+            int contador = 1;
+            System.out.print(STR."""
+
+                    =======================================================================================================================================================================
+                    ⠀           \{ColoresConsola.TEXTO_ROJO}ARRAYS IMPRESOS\{ColoresConsola.TEXTO_AMARILLO}
+                    =======================================================================================================================================================================
+
+                    """);
+            for (int[] arr : arrays) {
+                System.out.print(ColoresConsola.TEXTO_AZUL + "Array #" + contador + ": " + ColoresConsola.TEXTO_AMARILLO);
+                for (int num : arr) {
+                    System.out.print(num + " ");
+                }
+                System.out.println("\n");
+                contador++;
+            }
+        } catch (ListaVaciaException e) {
+            System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
+        }
+
+    }
+
+    public ArrayList<int []> añadirElementoArrays (ArrayList<int []> arrays) {
+        try {
+            if (arrays.isEmpty()) {
+                throw new ListaVaciaException("La lista de arrays está vacía, no se puede añadir un elemento.");
+            }
+
+            mostrarArrays(arrays);
+            System.out.print(" Selecciona el número del array que deseas añadir un elemento (EJEMPLO: 1 , 2) → ");
+
+            int elemento = ValidadorEntrada.leerEntero(sc);
+            sc.nextLine();
+
+            if (elemento > (arrays.size())) {
+                System.out.println(ColoresConsola.TEXTO_ROJO + " ⚠️ El elemento ingresado no existe en la lista " + ColoresConsola.TEXTO_AMARILLO);
+                return arrays;
+            }
+
+            arrays.set(elemento - 1, manejoDeVectores.añadirElementoArray(arrays.get(elemento - 1), sc));
+
+            System.out.println(ColoresConsola.TEXTO_VERDE + "\n SE HAN AÑADIDO TODOS LOS ELEMENTOS EN EL VECTOR CON ÉXITO! ✅ " + ColoresConsola.TEXTO_AMARILLO);
+            sc.nextLine();
+
+        } catch (ListaVaciaException e) {
+            System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
+        }
+
+        return arrays;
+    };
+
+
+    public static class ListaVaciaException extends RuntimeException {
+        public ListaVaciaException(String mensaje) {
+            super(mensaje);
+        }
+    }
+
 
     public void cerrar() {
         sc.close();
