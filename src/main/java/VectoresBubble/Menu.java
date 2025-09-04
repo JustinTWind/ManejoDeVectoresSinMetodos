@@ -4,11 +4,9 @@ import misUtilidades.ColoresConsola;
 import misUtilidades.ValidadorEntrada;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Vector;
-
-import static VectoresBubble.manejoDeVectores.bubbleSorting;
 
 public class Menu {
 
@@ -30,11 +28,10 @@ public class Menu {
 ⠀        2. Ordenar vector de manera ascendente
 ⠀        3. Mostrar vector
 ⠀        4. Insertar elemento en vector
-⠀        5. Eliminar elemento en vector
-⠀        6. Eliminar números repetidos
-⠀        7. Encontrar índice de número en vector
-⠀        8. Unir dos vectores
-         9. Salir del programa
+⠀        5. Eliminar elementos en vector
+⠀        6. Encontrar índice de número en vector
+⠀        7. Unir dos vectores
+         8. Salir del programa
          
 ⠀        Seleccione una opción →\t""");
         String entrada = sc.nextLine().trim();
@@ -179,13 +176,77 @@ public class Menu {
         return arrays;
     };
 
+    public ArrayList<int []> eliminarElementoArrays (ArrayList<int []> arrays) {
+        try {
+            if (arrays.isEmpty()) {
+                throw new ListaVaciaException("La lista de arrays está vacía, no se puede eliminar un elemento.");
+            }
+
+            mostrarArrays(arrays);
+            System.out.print(" Selecciona el número del array que deseas eliminar un elemento (EJEMPLO: 1 , 2) → ");
+
+            int elemento = ValidadorEntrada.leerEntero(sc);
+            sc.nextLine();
+
+            if (elemento > (arrays.size())) {
+                System.out.println(ColoresConsola.TEXTO_ROJO + " ⚠️ El elemento ingresado no existe en la lista " + ColoresConsola.TEXTO_AMARILLO);
+                return arrays;
+            }
+
+            arrays.set(elemento - 1, manejoDeVectores.eliminarElementoArray(arrays.get(elemento - 1), sc));
+
+            System.out.println(ColoresConsola.TEXTO_VERDE + "\n SE HAN ELIMINADO TODOS LOS ELEMENTOS EN EL VECTOR CON ÉXITO! ✅ " + ColoresConsola.TEXTO_AMARILLO);
+            sc.nextLine();
+
+        } catch (ListaVaciaException e) {
+            System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
+        }
+
+        return arrays;
+    };
+
+    public void encontrarIndiceNumeros (ArrayList<int []> arrays) {
+        try {
+            if (arrays.isEmpty()) {
+                throw new ListaVaciaException("La lista de arrays está vacía, no se puede buscar el índice de algún elemento.");
+            }
+
+            mostrarArrays(arrays);
+            System.out.print(" Selecciona el número del array que deseas buscar el índice de un elemento (EJEMPLO: 1 , 2) → ");
+
+            int elemento = ValidadorEntrada.leerEntero(sc);
+            sc.nextLine();
+
+            if (elemento > (arrays.size())) {
+                System.out.println(ColoresConsola.TEXTO_ROJO + " ⚠️ El elemento ingresado no existe en la lista " + ColoresConsola.TEXTO_AMARILLO);
+                return;
+            }
+
+            System.out.println(" Ingresa el número del cual deseas conocer el índice en el vector seleccionado → ");
+            int value = ValidadorEntrada.leerEntero(sc);
+            sc.nextLine();
+
+            int[] indices = manejoDeVectores.binarySearch(arrays.get(elemento - 1), value);
+
+            System.out.println(ColoresConsola.TEXTO_VERDE + "\n Indices en los que se encuentra el elemento ingresado → " );
+                    Arrays.stream(indices).forEach(n -> System.out.printf("%4d", n));
+            System.out.println(ColoresConsola.TEXTO_AMARILLO);
+            sc.nextLine();
+
+        } catch (ListaVaciaException e) {
+            System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
+        } catch (manejoDeVectores.ElementNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    };
+
+
 
     public static class ListaVaciaException extends RuntimeException {
         public ListaVaciaException(String mensaje) {
             super(mensaje);
         }
     }
-
 
     public void cerrar() {
         sc.close();

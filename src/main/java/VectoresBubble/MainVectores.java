@@ -82,7 +82,9 @@ public class MainVectores {
                  case 2 -> menu.organizarVectoresBubble(arrayDeArrays);
                  case 3 -> menu.mostrarArrays(arrayDeArrays);
                  case 4 -> menu.añadirElementoArrays(arrayDeArrays);
-                 case 9 -> salir=true;
+                 case 5 -> menu.eliminarElementoArrays(arrayDeArrays);
+                 case 6 -> menu.encontrarIndiceNumeros(arrayDeArrays);
+                 case 8 -> salir=true;
              }
          }
 

@@ -1,6 +1,8 @@
 package VectoresBubble;
 
 import misUtilidades.*;
+
+import java.awt.*;
 import java.util.*;
 
 public class manejoDeVectores {
@@ -37,6 +39,35 @@ public class manejoDeVectores {
         return nuevoArray;
     }
 
+    public static int[] eliminarElementoArray(int[] array, Scanner sc) {
+        System.out.print("Ingrese el dígito que desea eliminar: ");
+        int digito = ValidadorEntrada.leerEntero(sc);
+        sc.nextLine();
+
+        // Contar cuántos elementos se quedan
+        int contador = 0;
+        for (int num : array) {
+            if (num != digito) {
+                contador++;
+            }
+        }
+
+        if (contador == array.length) {
+            System.out.println(ColoresConsola.TEXTO_ROJO + " ✖ No existe el elemento con el mismo valor" + ColoresConsola.TEXTO_AMARILLO);
+            return array; // no había nada que borrar lol xd
+        }
+
+        // Se crea otro array con los elementos eliminados
+        int[] nuevoArray = new int[contador];
+        int index = 0;
+        for (int num : array) {
+            if (num != digito) {
+                nuevoArray[index++] = num;
+            }
+        }
+
+        return nuevoArray;
+    }
 
 
     public static int[] crearVectorAleatoriamente(int size, Random rand) {
