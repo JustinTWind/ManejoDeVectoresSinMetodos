@@ -170,6 +170,20 @@ public class manejoDeVectores {
         }
     }
 
+    public static int[] unirVectores(int[] vector1, int[] vector2) {
+        int[] nuevoVector = new int[vector1.length + vector2.length];
+
+        for (int i = 0; i < vector1.length; i++) {
+            nuevoVector[i] = vector1[i];
+        }
+
+        for (int i = 0; i < vector2.length; i++) {
+            nuevoVector[vector1.length + i] = vector2[i];
+        }
+
+        return bubbleSorting(nuevoVector);
+    }
+
     public static int[] bubbleSorting (int[] vector) {
         for (int i = 0; i < vector.length - 1; i++) {
             for (int j = 0; j < vector.length - i - 1; j++) {
@@ -183,5 +197,3 @@ public class manejoDeVectores {
         return vector;
     }
 }
-
-

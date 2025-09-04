@@ -1,9 +1,7 @@
 package VectoresBubble;
 
-import  misUtilidades.*;
-
+import  misUtilidades.ColoresConsola;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainVectores {
     /*
@@ -20,7 +18,6 @@ public class MainVectores {
 
      static void main(String[] args){
 
-         /* Rojo
          System.out.printf(STR."""
 
            ▀██    ██▀           ▄               ▀██                        ▀██                                 ▀██                                       ██                     ▄             \s
@@ -71,7 +68,6 @@ public class MainVectores {
                                                                         ⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠒⠦⣄⣸⡟⠒⠒⠒⠒⠒⠚⠛⠀⠀⠀⠀
            \s""" + ColoresConsola.COLOR_RESET);
 
-          */ // Rojo
          Menu menu = new Menu();
          boolean salir=false;
          ArrayList<int []> arrayDeArrays = new ArrayList<>();
@@ -84,27 +80,10 @@ public class MainVectores {
                  case 4 -> menu.añadirElementoArrays(arrayDeArrays);
                  case 5 -> menu.eliminarElementoArrays(arrayDeArrays);
                  case 6 -> menu.encontrarIndiceNumeros(arrayDeArrays);
+                 case 7 -> menu.unirArrays(arrayDeArrays);
                  case 8 -> salir=true;
              }
          }
-
-          arrayDeArrays.stream().map(Arrays::toString).forEach(System.out::println);
-
          menu.cerrar();
-
-
-         // Pruebas de métodos
-
-         /*
-         int [] vector = new int []{1,1,1,2,3,4,5,6,7,8,9,10};
-        try{
-            int [] posicion = binarySearch(vector,1);
-            System.out.println("Posiciones: " + Arrays.toString(posicion));
-        } catch (ElementNotFoundException e){
-            System.out.println("Error: " + e.getMessage());
-        }
-          */
-
     }
-
 }

@@ -93,7 +93,15 @@ public class Menu {
         }
     }
 
-    public ArrayList<int []> organizarVectoresBubble (ArrayList<int []> arrays) {
+    public void organizarVectoresBubble (ArrayList<int []> arrays) {
+
+        System.out.print(STR."""
+
+⠀=======================================================================================================================================================================
+⠀           \{ColoresConsola.TEXTO_ROJO}2 ORGANIZAR VECTOR\{ColoresConsola.TEXTO_AMARILLO}
+⠀=======================================================================================================================================================================
+⠀        \t""");
+
         try {
             if (arrays.isEmpty()) {
                 throw new ListaVaciaException("La lista de arrays está vacía, no se puede ordenar.");
@@ -116,8 +124,7 @@ public class Menu {
                 System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
         }
 
-        return arrays;
-    };
+    }
 
     public void mostrarArrays(ArrayList<int []> arrays) {
 
@@ -147,7 +154,15 @@ public class Menu {
 
     }
 
-    public ArrayList<int []> añadirElementoArrays (ArrayList<int []> arrays) {
+    public void añadirElementoArrays (ArrayList<int []> arrays) {
+
+        System.out.print(STR."""
+
+⠀=======================================================================================================================================================================
+⠀           \{ColoresConsola.TEXTO_ROJO}4 AÑADIR ELEMENTOS EN VECTOR\{ColoresConsola.TEXTO_AMARILLO}
+⠀=======================================================================================================================================================================
+⠀        \t""");
+
         try {
             if (arrays.isEmpty()) {
                 throw new ListaVaciaException("La lista de arrays está vacía, no se puede añadir un elemento.");
@@ -161,7 +176,7 @@ public class Menu {
 
             if (elemento > (arrays.size())) {
                 System.out.println(ColoresConsola.TEXTO_ROJO + " ⚠️ El elemento ingresado no existe en la lista " + ColoresConsola.TEXTO_AMARILLO);
-                return arrays;
+                return;
             }
 
             arrays.set(elemento - 1, manejoDeVectores.añadirElementoArray(arrays.get(elemento - 1), sc));
@@ -173,10 +188,17 @@ public class Menu {
             System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
         }
 
-        return arrays;
-    };
+    }
 
-    public ArrayList<int []> eliminarElementoArrays (ArrayList<int []> arrays) {
+    public void eliminarElementoArrays (ArrayList<int []> arrays) {
+
+        System.out.print(STR."""
+
+⠀=======================================================================================================================================================================
+⠀           \{ColoresConsola.TEXTO_ROJO}5 ELIMINAR ELEMENTOS EN VECTOR\{ColoresConsola.TEXTO_AMARILLO}
+⠀=======================================================================================================================================================================
+⠀        \t""");
+
         try {
             if (arrays.isEmpty()) {
                 throw new ListaVaciaException("La lista de arrays está vacía, no se puede eliminar un elemento.");
@@ -190,22 +212,28 @@ public class Menu {
 
             if (elemento > (arrays.size())) {
                 System.out.println(ColoresConsola.TEXTO_ROJO + " ⚠️ El elemento ingresado no existe en la lista " + ColoresConsola.TEXTO_AMARILLO);
-                return arrays;
+                return;
             }
 
             arrays.set(elemento - 1, manejoDeVectores.eliminarElementoArray(arrays.get(elemento - 1), sc));
 
             System.out.println(ColoresConsola.TEXTO_VERDE + "\n SE HAN ELIMINADO TODOS LOS ELEMENTOS EN EL VECTOR CON ÉXITO! ✅ " + ColoresConsola.TEXTO_AMARILLO);
-            sc.nextLine();
 
         } catch (ListaVaciaException e) {
             System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
         }
 
-        return arrays;
-    };
+    }
 
     public void encontrarIndiceNumeros (ArrayList<int []> arrays) {
+
+        System.out.print(STR."""
+
+⠀=======================================================================================================================================================================
+⠀           \{ColoresConsola.TEXTO_ROJO}6 ENCONTRAR ÍNDICES EN VECTOR\{ColoresConsola.TEXTO_AMARILLO}
+⠀=======================================================================================================================================================================
+⠀        \t""");
+
         try {
             if (arrays.isEmpty()) {
                 throw new ListaVaciaException("La lista de arrays está vacía, no se puede buscar el índice de algún elemento.");
@@ -222,24 +250,83 @@ public class Menu {
                 return;
             }
 
-            System.out.println(" Ingresa el número del cual deseas conocer el índice en el vector seleccionado → ");
+            System.out.print(" Ingresa el número del cual deseas conocer el índice en el vector seleccionado → ");
             int value = ValidadorEntrada.leerEntero(sc);
             sc.nextLine();
 
             int[] indices = manejoDeVectores.binarySearch(arrays.get(elemento - 1), value);
 
-            System.out.println(ColoresConsola.TEXTO_VERDE + "\n Indices en los que se encuentra el elemento ingresado → " );
+            System.out.print(ColoresConsola.TEXTO_VERDE + "\n Indices en los que se encuentra el elemento ingresado → " );
                     Arrays.stream(indices).forEach(n -> System.out.printf("%4d", n));
             System.out.println(ColoresConsola.TEXTO_AMARILLO);
-            sc.nextLine();
 
         } catch (ListaVaciaException e) {
             System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
         } catch (manejoDeVectores.ElementNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println(ColoresConsola.TEXTO_ROJO + e.getMessage() + ColoresConsola.TEXTO_AMARILLO);
         }
-    };
+    }
 
+    public void unirArrays (ArrayList<int []> arrays){
+
+        System.out.print(STR."""
+
+⠀=======================================================================================================================================================================
+⠀           \{ColoresConsola.TEXTO_ROJO}7 UNIR DOS VECTORES\{ColoresConsola.TEXTO_AMARILLO}
+⠀=======================================================================================================================================================================
+⠀        \t""");
+
+        try {
+
+            if (arrays.isEmpty()) {
+                throw new ListaVaciaException("La lista de arrays está vacía, no se pueden unir los vectores.");
+            } else if (arrays.size() < 2) throw new ListaVaciaException("La lista de arrays solo posee un vectores, por lo tanto, no se puede unir con otro vector");
+
+            mostrarArrays(arrays);
+            int elemento1;
+            int elemento2;
+            while (true) {
+                System.out.print(" Selecciona el primer número del array que deseas añadir un elemento (EJEMPLO: 1 , 2) → ");
+
+                elemento1 = ValidadorEntrada.leerEntero(sc);
+                sc.nextLine();
+                if (elemento1 > (arrays.size())) {
+                    System.out.println(ColoresConsola.TEXTO_ROJO + " ⚠️ El elemento ingresado no existe en la lista " + ColoresConsola.TEXTO_AMARILLO);
+                    continue;
+                }
+
+                System.out.print(" Selecciona el segundo número del array que deseas añadir un elemento (EJEMPLO: 1 , 2) → ");
+                elemento2 = ValidadorEntrada.leerEntero(sc);
+                sc.nextLine();
+                if (elemento2 > (arrays.size())) {
+                    System.out.println(ColoresConsola.TEXTO_ROJO + " ⚠️ El elemento ingresado no existe en la lista " + ColoresConsola.TEXTO_AMARILLO);
+                    continue;
+                }
+                break;
+            }
+
+            arrays.add(manejoDeVectores.unirVectores(arrays.get(elemento1 - 1),arrays.get(elemento2 - 1)));
+
+            System.out.print(" Desea eliminar los arrays anteriores unidos? [Si/NO] → ");
+            String respuesta  = ValidadorEntrada.ComprobarVacio(sc).toLowerCase();
+
+            while (!respuesta.matches("si|no")) {
+                System.out.print(ColoresConsola.TEXTO_ROJO + " ✖ Entrada inválida. Ingrese Si o No: " + ColoresConsola.TEXTO_AMARILLO);
+                respuesta  = ValidadorEntrada.ComprobarVacio(sc).toLowerCase();
+            }
+
+            if (respuesta.equals("si")) {
+                arrays.remove(elemento1 - 1);
+                arrays.remove(elemento2 - 1);
+            }
+
+            System.out.println(ColoresConsola.TEXTO_VERDE + "\n SE HAN UNIDO LOS VECTORES CON ÉXITO! ✅ " + ColoresConsola.TEXTO_AMARILLO);
+
+
+        } catch (ListaVaciaException e) {
+            System.out.println( ColoresConsola.TEXTO_ROJO + "\n⚠️ Se produjo un error: "+ ColoresConsola.TEXTO_AMARILLO + e.getMessage());
+        }
+    }
 
 
     public static class ListaVaciaException extends RuntimeException {

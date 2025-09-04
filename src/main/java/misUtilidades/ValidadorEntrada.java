@@ -16,7 +16,6 @@ public class ValidadorEntrada {
                 num = scanner.nextInt();
                 if (num <= 0 ) {
                     System.out.print("❌ Entrada inválida | Ingrese un número mayor a 0 → ");
-                    continue;
                 } else return num;
             } catch (InputMismatchException e) {
                 System.out.print("❌ Entrada inválida | Ingrese un número entero → ");
@@ -32,7 +31,6 @@ public class ValidadorEntrada {
                 num = scanner.nextByte();
                 if (num <= 0 ) {
                     System.out.print("❌ Entrada inválida | Ingrese un número mayor a 0 → ");
-                    continue;
                 } else return num;
             } catch (InputMismatchException e) {
                 System.out.print("❌ Entrada inválida | Ingrese un número entero → ");
@@ -64,7 +62,6 @@ public class ValidadorEntrada {
 
                 if (texto.isEmpty()) {
                     System.out.print("\"❌ Entrada inválida | El Texto está vacío → \"");
-                    continue;
                 } else return texto;
 
             } catch (InputMismatchException e) {
